@@ -7,8 +7,6 @@
 
 <title>Menú Cafetería</title>
 
-<meta http-equiv="refresh" content="60">
-
 <style>
 
 body{
@@ -55,17 +53,26 @@ td{
 
 .dia{
   background:#d8d8d8;
-  width:120px;
+  width:140px;
   text-align:center;
   font-style:italic;
   font-weight:bold;
 }
 
+.numeroDia{
+  font-size:64px;
+  font-weight:bold;
+  line-height:1;
+  margin:15px 0;
+}
+
 .numero{
   background:#f0c565;
-  width:40px;
+  width:50px;
   font-weight:bold;
   text-align:center;
+  vertical-align:top;
+  font-size:26px;
 }
 
 .menu{
@@ -75,15 +82,14 @@ td{
 }
 
 .item{
-  margin:6px 0;
-  font-size:24px;
+  margin:8px 0;
+  font-size:22px;
   font-weight:bold;
 }
 
 .postre{
   background:#c7d7a2;
   text-align:center;
-  font-style:italic;
   font-size:22px;
   padding:8px;
 }
@@ -97,7 +103,10 @@ td{
 <table>
 
 <tr>
-<td rowspan="2" class="logo">SJD</td>
+
+<td rowspan="2" class="logo">
+SJD
+</td>
 
 <td colspan="2" class="titulo">
 MENÚ SETMANA
@@ -106,6 +115,7 @@ MENÚ SETMANA
 <td class="temporada" id="tituloDia">
 CARGANDO...
 </td>
+
 </tr>
 
 <tr>
@@ -126,7 +136,9 @@ SOPAR / CENA
 CARGANDO...
 </td>
 
-<td class="numero">1</td>
+<td class="numero">
+1
+</td>
 
 <td class="menu" id="cp"></td>
 
@@ -136,7 +148,9 @@ CARGANDO...
 
 <tr>
 
-<td class="numero">2</td>
+<td class="numero">
+2
+</td>
 
 <td class="menu" id="cs"></td>
 
@@ -175,8 +189,11 @@ async function cargar(){
 
 try{
 
-const respuesta = await fetch(URL_JSON);
-const datos = await respuesta.json();
+const respuesta =
+await fetch(URL_JSON + "?t=" + Date.now());
+
+const datos =
+await respuesta.json();
 
 const dias = [
 "Domingo",
@@ -188,16 +205,25 @@ const dias = [
 "Sábado"
 ];
 
-let hoy = dias[new Date().getDay()];
+let hoy =
+dias[new Date().getDay()];
 
 if(!datos.some(x => x.Dia === hoy)){
   hoy = "Lunes";
 }
 
-document.getElementById("tituloDia").innerHTML = hoy.toUpperCase();
+const numeroDia =
+new Date().getDate();
+
+document.getElementById("tituloDia").innerHTML =
+hoy.toUpperCase() + " " + numeroDia;
 
 document.getElementById("dia").innerHTML =
-CAT[hoy] + "<br><br>" + hoy.toUpperCase();
+CAT[hoy] +
+"<div class='numeroDia'>" +
+numeroDia +
+"</div>" +
+hoy.toUpperCase();
 
 function filtrar(servicio,categoria){
 
@@ -242,7 +268,7 @@ pintar(filtrar("Cena","Postre"));
 catch(e){
 
 document.getElementById("tituloDia").innerHTML =
-"ERROR CARGANDO DATOS";
+"ERROR";
 
 }
 
@@ -255,4 +281,5 @@ setInterval(cargar,60000);
 </script>
 
 </body>
+
 </html>
