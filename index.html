@@ -1,15 +1,258 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
 <meta charset="utf-8">
-<title>Menú Cafeteria</title>
+
+<title>Menú Cafetería</title>
+
+<meta http-equiv="refresh" content="60">
+
+<style>
+
+body{
+  margin:0;
+  padding:15px;
+  background:#ffffff;
+  font-family:Arial,sans-serif;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+td{
+  border:2px solid #000;
+}
+
+.logo{
+  width:100px;
+  text-align:center;
+  font-weight:bold;
+}
+
+.titulo{
+  background:#d9d9d9;
+  font-size:28px;
+  font-weight:bold;
+  padding:4px;
+}
+
+.temporada{
+  background:#d9d9d9;
+  font-size:24px;
+  font-weight:bold;
+}
+
+.cabecera{
+  background:#f0c565;
+  font-size:22px;
+  font-weight:bold;
+  text-align:center;
+}
+
+.dia{
+  background:#d8d8d8;
+  width:120px;
+  text-align:center;
+  font-style:italic;
+  font-weight:bold;
+}
+
+.numero{
+  background:#f0c565;
+  width:40px;
+  font-weight:bold;
+  text-align:center;
+}
+
+.menu{
+  text-align:center;
+  vertical-align:top;
+  padding:6px;
+}
+
+.item{
+  margin:6px 0;
+  font-size:24px;
+  font-weight:bold;
+}
+
+.postre{
+  background:#c7d7a2;
+  text-align:center;
+  font-style:italic;
+  font-size:22px;
+  padding:8px;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h1>MENÚ CAFETERÍA FUNCIONANDO</h1>
+<table>
 
-<p>Si ves este texto, GitHub Pages está funcionando.</p>
+<tr>
+<td rowspan="2" class="logo">SJD</td>
+
+<td colspan="2" class="titulo">
+MENÚ SETMANA
+</td>
+
+<td class="temporada" id="tituloDia">
+CARGANDO...
+</td>
+</tr>
+
+<tr>
+
+<td colspan="2" class="cabecera">
+DINAR / COMIDA
+</td>
+
+<td class="cabecera">
+SOPAR / CENA
+</td>
+
+</tr>
+
+<tr>
+
+<td rowspan="3" class="dia" id="dia">
+CARGANDO...
+</td>
+
+<td class="numero">1</td>
+
+<td class="menu" id="cp"></td>
+
+<td class="menu" id="cnp"></td>
+
+</tr>
+
+<tr>
+
+<td class="numero">2</td>
+
+<td class="menu" id="cs"></td>
+
+<td class="menu" id="cns"></td>
+
+</tr>
+
+<tr>
+
+<td></td>
+
+<td class="postre" id="cpostre"></td>
+
+<td class="postre" id="cnpostre"></td>
+
+</tr>
+
+</table>
+
+<script>
+
+const URL_JSON =
+"https://script.google.com/macros/s/AKfycbxi7zYor8bUyAno5CUTJXWBin_ySMJDPrm9-Y1iY5pqKzOZwzwSXUsmtL8wwdPwPPqmqQ/exec";
+
+const CAT = {
+"Lunes":"DILLUNS",
+"Martes":"DIMARTS",
+"Miércoles":"DIMECRES",
+"Jueves":"DIJOUS",
+"Viernes":"DIVENDRES",
+"Sábado":"DISSABTE",
+"Domingo":"DIUMENGE"
+};
+
+async function cargar(){
+
+try{
+
+const respuesta = await fetch(URL_JSON);
+const datos = await respuesta.json();
+
+const dias = [
+"Domingo",
+"Lunes",
+"Martes",
+"Miércoles",
+"Jueves",
+"Viernes",
+"Sábado"
+];
+
+let hoy = dias[new Date().getDay()];
+
+if(!datos.some(x => x.Dia === hoy)){
+  hoy = "Lunes";
+}
+
+document.getElementById("tituloDia").innerHTML = hoy.toUpperCase();
+
+document.getElementById("dia").innerHTML =
+CAT[hoy] + "<br><br>" + hoy.toUpperCase();
+
+function filtrar(servicio,categoria){
+
+return datos.filter(x =>
+x.Dia === hoy &&
+x.Servicio === servicio &&
+x.Categoria === categoria &&
+x.Activo === "SI"
+);
+
+}
+
+function pintar(lista){
+
+return lista.map(x =>
+"<div class='item'>" +
+x.Plato_Cat +
+"</div>"
+).join("");
+
+}
+
+document.getElementById("cp").innerHTML =
+pintar(filtrar("Comida","Primero"));
+
+document.getElementById("cnp").innerHTML =
+pintar(filtrar("Cena","Primero"));
+
+document.getElementById("cs").innerHTML =
+pintar(filtrar("Comida","Segundo"));
+
+document.getElementById("cns").innerHTML =
+pintar(filtrar("Cena","Segundo"));
+
+document.getElementById("cpostre").innerHTML =
+pintar(filtrar("Comida","Postre"));
+
+document.getElementById("cnpostre").innerHTML =
+pintar(filtrar("Cena","Postre"));
+
+}
+catch(e){
+
+document.getElementById("tituloDia").innerHTML =
+"ERROR CARGANDO DATOS";
+
+}
+
+}
+
+cargar();
+
+setInterval(cargar,60000);
+
+</script>
 
 </body>
 </html>
