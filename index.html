@@ -66,12 +66,12 @@ td{
 
 .numero{
   background:#e8c15b;
-  width:110px;
+  width:120px;
   text-align:center;
-  font-size:16px;
+  font-size:15px;
   font-weight:bold;
   line-height:1.2;
-  padding:10px 4px;
+  padding:12px 5px;
 }
 
 .menu{
@@ -136,7 +136,9 @@ SOPAR / CENA
 CARGANDO...
 </td>
 
-<td class="numero">1</td>
+<td class="numero">
+PRIMERO
+</td>
 
 <td class="menu" id="cp"></td>
 
@@ -146,7 +148,9 @@ CARGANDO...
 
 <tr>
 
-<td class="numero">2</td>
+<td class="numero">
+SEGUNDO
+</td>
 
 <td class="menu" id="cs"></td>
 
@@ -157,7 +161,7 @@ CARGANDO...
 <tr>
 
 <td class="numero veg">
-VEG
+VEGANO
 </td>
 
 <td class="menu veg" id="cveg"></td>
@@ -169,7 +173,7 @@ VEG
 <tr>
 
 <td class="numero postre">
-P
+POSTRE
 </td>
 
 <td class="menu postre" id="cpostre"></td>
@@ -197,9 +201,7 @@ const CAT = {
 };
 
 function semanaMes(fecha){
-
   return Math.ceil(fecha.getDate()/7);
-
 }
 
 async function cargar(){
@@ -310,6 +312,7 @@ console.error(error);
 }
 
 cargar();
+
 setInterval(cargar,60000);
 
 </script>
