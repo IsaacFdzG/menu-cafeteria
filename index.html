@@ -24,7 +24,7 @@ td{
 }
 
 .logo{
-  width:100px;
+  width:120px;
   text-align:center;
   font-weight:bold;
 }
@@ -33,12 +33,12 @@ td{
   background:#d9d9d9;
   font-size:28px;
   font-weight:bold;
-  padding:4px;
+  padding:6px;
 }
 
 .temporada{
   background:#d9d9d9;
-  font-size:24px;
+  font-size:22px;
   font-weight:bold;
 }
 
@@ -51,43 +51,49 @@ td{
 
 .dia{
   background:#d8d8d8;
-  width:180px;
+  width:220px;
   text-align:center;
   font-style:italic;
   font-weight:bold;
+  padding:10px;
 }
 
-.fechaCompleta{
-  font-size:28px;
+.fecha{
+  font-size:26px;
   font-weight:bold;
   margin:15px 0;
 }
 
 .numero{
   background:#f0c565;
-  width:50px;
+  width:60px;
   text-align:center;
-  font-size:26px;
+  font-size:24px;
   font-weight:bold;
 }
 
 .menu{
   text-align:center;
   vertical-align:top;
-  padding:6px;
+  padding:8px;
 }
 
 .item{
-  margin:8px 0;
-  font-size:22px;
+  margin:6px 0;
+  font-size:20px;
   font-weight:bold;
+}
+
+.vegano{
+  background:#d8f0c2;
+  font-weight:bold;
+  text-align:center;
 }
 
 .postre{
   background:#c7d7a2;
   text-align:center;
-  font-size:22px;
-  padding:8px;
+  font-weight:bold;
 }
 
 </style>
@@ -99,7 +105,10 @@ td{
 <table>
 
 <tr>
-<td rowspan="2" class="logo">SJD</td>
+
+<td rowspan="2" class="logo">
+SJD
+</td>
 
 <td colspan="2" class="titulo">
 MENÚ SETMANA
@@ -125,7 +134,7 @@ SOPAR / CENA
 
 <tr>
 
-<td rowspan="3" class="dia" id="dia">
+<td rowspan="5" class="dia" id="dia">
 CARGANDO...
 </td>
 
@@ -149,7 +158,17 @@ CARGANDO...
 
 <tr>
 
-<td></td>
+<td class="numero">V</td>
+
+<td class="vegano" id="cveg"></td>
+
+<td class="vegano" id="cnveg"></td>
+
+</tr>
+
+<tr>
+
+<td class="numero">P</td>
 
 <td class="postre" id="cpostre"></td>
 
@@ -184,43 +203,45 @@ await fetch(URL_JSON + "?t=" + Date.now());
 const datos =
 await respuesta.json();
 
-const fecha = new Date();
+const fechaActual = new Date();
 
 const fechaTexto =
-String(fecha.getDate()).padStart(2,'0') + "/" +
-String(fecha.getMonth()+1).padStart(2,'0') + "/" +
-fecha.getFullYear();
+String(fechaActual.getDate()).padStart(2,"0") + "/" +
+String(fechaActual.getMonth()+1).padStart(2,"0") + "/" +
+fechaActual.getFullYear();
 
-const filaHoy =
-datos.find(x => x.Fecha === fechaTexto);
+const filasHoy =
+datos.filter(x =>
+String(x.Fecha).trim() === fechaTexto &&
+String(x.Activo).trim().toUpperCase() === "SI"
+);
 
-if(!filaHoy){
-   document.getElementById("tituloDia").innerHTML =
-   "SIN MENÚ";
-   return;
+if(filasHoy.length === 0){
+
+document.getElementById("tituloDia").innerHTML =
+"SIN MENÚ";
+
+return;
+
 }
 
-const hoy = filaHoy.Dia;
+const hoy = filasHoy[0].Dia;
 
 document.getElementById("tituloDia").innerHTML =
 fechaTexto;
 
 document.getElementById("dia").innerHTML =
 CAT[hoy] +
-"<div class='fechaCompleta'>" +
+"<div class='fecha'>" +
 fechaTexto +
 "</div>" +
 hoy.toUpperCase();
 
 function filtrar(servicio,categoria){
 
-return datos.filter(x =>
-
-x.Fecha === fechaTexto &&
+return filasHoy.filter(x =>
 x.Servicio === servicio &&
-x.Categoria === categoria &&
-x.Activo === "SI"
-
+x.Categoria === categoria
 );
 
 }
@@ -228,11 +249,9 @@ x.Activo === "SI"
 function pintar(lista){
 
 return lista.map(x =>
-
 "<div class='item'>" +
 x.Plato_Cat +
 "</div>"
-
 ).join("");
 
 }
@@ -248,6 +267,12 @@ pintar(filtrar("Comida","Segundo"));
 
 document.getElementById("cns").innerHTML =
 pintar(filtrar("Cena","Segundo"));
+
+document.getElementById("cveg").innerHTML =
+pintar(filtrar("Comida","Vegano"));
+
+document.getElementById("cnveg").innerHTML =
+pintar(filtrar("Cena","Vegano"));
 
 document.getElementById("cpostre").innerHTML =
 pintar(filtrar("Comida","Postre"));
