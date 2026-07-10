@@ -8,92 +8,93 @@
 <style>
 
 body{
-  margin:0;
-  padding:15px;
-  background:#ffffff;
-  font-family:Arial,sans-serif;
+    margin:0;
+    padding:15px;
+    background:#ffffff;
+    font-family:Arial,sans-serif;
 }
 
 table{
-  width:100%;
-  border-collapse:collapse;
+    width:100%;
+    border-collapse:collapse;
 }
 
 td{
-  border:2px solid #000;
+    border:2px solid #000;
 }
 
 .logo{
-  width:120px;
-  text-align:center;
-  font-weight:bold;
+    width:100px;
+    text-align:center;
+    font-weight:bold;
 }
 
 .titulo{
-  background:#d9d9d9;
-  font-size:28px;
-  font-weight:bold;
-  padding:6px;
+    background:#d9d9d9;
+    font-size:28px;
+    font-weight:bold;
+    padding:4px;
 }
 
 .temporada{
-  background:#d9d9d9;
-  font-size:22px;
-  font-weight:bold;
+    background:#d9d9d9;
+    font-size:24px;
+    font-weight:bold;
 }
 
 .cabecera{
-  background:#f0c565;
-  font-size:22px;
-  font-weight:bold;
-  text-align:center;
+    background:#f0c565;
+    font-size:22px;
+    font-weight:bold;
+    text-align:center;
 }
 
 .dia{
-  background:#d8d8d8;
-  width:220px;
-  text-align:center;
-  font-style:italic;
-  font-weight:bold;
-  padding:10px;
+    background:#d8d8d8;
+    width:180px;
+    text-align:center;
+    font-style:italic;
+    font-weight:bold;
 }
 
-.fecha{
-  font-size:26px;
-  font-weight:bold;
-  margin:15px 0;
+.fechaCompleta{
+    font-size:28px;
+    font-weight:bold;
+    margin:15px 0;
 }
 
 .numero{
-  background:#f0c565;
-  width:60px;
-  text-align:center;
-  font-size:24px;
-  font-weight:bold;
+    background:#f0c565;
+    width:60px;
+    text-align:center;
+    font-size:26px;
+    font-weight:bold;
+}
+
+.veganoTitulo{
+    background:#d8edc6;
+    text-align:center;
+    font-weight:bold;
+    font-size:20px;
+}
+
+.postreTitulo{
+    background:#c7d7a2;
+    text-align:center;
+    font-weight:bold;
+    font-size:20px;
 }
 
 .menu{
-  text-align:center;
-  vertical-align:top;
-  padding:8px;
+    text-align:center;
+    vertical-align:top;
+    padding:6px;
 }
 
 .item{
-  margin:6px 0;
-  font-size:20px;
-  font-weight:bold;
-}
-
-.vegano{
-  background:#d8f0c2;
-  font-weight:bold;
-  text-align:center;
-}
-
-.postre{
-  background:#c7d7a2;
-  text-align:center;
-  font-weight:bold;
+    margin:8px 0;
+    font-size:20px;
+    font-weight:bold;
 }
 
 </style>
@@ -138,7 +139,9 @@ SOPAR / CENA
 CARGANDO...
 </td>
 
-<td class="numero">1</td>
+<td class="numero">
+1
+</td>
 
 <td class="menu" id="cp"></td>
 
@@ -148,7 +151,9 @@ CARGANDO...
 
 <tr>
 
-<td class="numero">2</td>
+<td class="numero">
+2
+</td>
 
 <td class="menu" id="cs"></td>
 
@@ -158,21 +163,25 @@ CARGANDO...
 
 <tr>
 
-<td class="numero">V</td>
+<td class="veganoTitulo">
+VEG
+</td>
 
-<td class="vegano" id="cveg"></td>
+<td class="menu" id="cveg"></td>
 
-<td class="vegano" id="cnveg"></td>
+<td class="menu" id="cnveg"></td>
 
 </tr>
 
 <tr>
 
-<td class="numero">P</td>
+<td class="postreTitulo">
+POSTRE
+</td>
 
-<td class="postre" id="cpostre"></td>
+<td class="menu" id="cpostre"></td>
 
-<td class="postre" id="cnpostre"></td>
+<td class="menu" id="cnpostre"></td>
 
 </tr>
 
@@ -203,20 +212,17 @@ await fetch(URL_JSON + "?t=" + Date.now());
 const datos =
 await respuesta.json();
 
-const fechaActual = new Date();
+const fecha = new Date();
 
 const fechaTexto =
-String(fechaActual.getDate()).padStart(2,"0") + "/" +
-String(fechaActual.getMonth()+1).padStart(2,"0") + "/" +
-fechaActual.getFullYear();
+String(fecha.getDate()).padStart(2,'0') + "/" +
+String(fecha.getMonth()+1).padStart(2,'0') + "/" +
+fecha.getFullYear();
 
-const filasHoy =
-datos.filter(x =>
-String(x.Fecha).trim() === fechaTexto &&
-String(x.Activo).trim().toUpperCase() === "SI"
-);
+const filaHoy =
+datos.find(x => x.Fecha === fechaTexto);
 
-if(filasHoy.length === 0){
+if(!filaHoy){
 
 document.getElementById("tituloDia").innerHTML =
 "SIN MENÚ";
@@ -225,23 +231,27 @@ return;
 
 }
 
-const hoy = filasHoy[0].Dia;
+const hoy = filaHoy.Dia;
 
 document.getElementById("tituloDia").innerHTML =
 fechaTexto;
 
 document.getElementById("dia").innerHTML =
 CAT[hoy] +
-"<div class='fecha'>" +
+"<div class='fechaCompleta'>" +
 fechaTexto +
 "</div>" +
 hoy.toUpperCase();
 
 function filtrar(servicio,categoria){
 
-return filasHoy.filter(x =>
+return datos.filter(x =>
+
+x.Fecha === fechaTexto &&
 x.Servicio === servicio &&
-x.Categoria === categoria
+x.Categoria === categoria &&
+x.Activo === "SI"
+
 );
 
 }
@@ -249,9 +259,11 @@ x.Categoria === categoria
 function pintar(lista){
 
 return lista.map(x =>
+
 "<div class='item'>" +
 x.Plato_Cat +
 "</div>"
+
 ).join("");
 
 }
@@ -297,4 +309,5 @@ setInterval(cargar,60000);
 </script>
 
 </body>
+
 </html>
