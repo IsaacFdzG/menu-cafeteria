@@ -66,12 +66,12 @@ td{
 
 .numero{
   background:#e8c15b;
-  width:120px;
+  width:140px;
   text-align:center;
   font-size:15px;
   font-weight:bold;
+  padding:8px;
   line-height:1.2;
-  padding:12px 5px;
 }
 
 .menu{
@@ -81,7 +81,7 @@ td{
 }
 
 .item{
-  margin:10px 0;
+  margin:8px 0;
   font-size:22px;
   font-weight:bold;
 }
@@ -217,12 +217,8 @@ await respuesta.json();
 const hoy = new Date();
 
 const yyyy = hoy.getFullYear();
-
-const mm =
-String(hoy.getMonth()+1).padStart(2,"0");
-
-const dd =
-String(hoy.getDate()).padStart(2,"0");
+const mm = String(hoy.getMonth()+1).padStart(2,"0");
+const dd = String(hoy.getDate()).padStart(2,"0");
 
 const fechaISO =
 `${yyyy}-${mm}-${dd}`;
@@ -260,9 +256,11 @@ diaES.toUpperCase();
 function filtrar(servicio,categoria){
 
 return registrosHoy.filter(x =>
-x.Servicio===servicio &&
-x.Categoria===categoria &&
-x.Activo==="SI"
+
+x.Servicio === servicio &&
+x.Categoria === categoria &&
+x.Activo === "SI"
+
 );
 
 }
@@ -312,7 +310,6 @@ console.error(error);
 }
 
 cargar();
-
 setInterval(cargar,60000);
 
 </script>
