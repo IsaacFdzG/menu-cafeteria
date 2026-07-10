@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="utf-8">
 <title>Menú Cafetería</title>
@@ -8,93 +7,89 @@
 <style>
 
 body{
-    margin:0;
-    padding:15px;
-    background:#ffffff;
-    font-family:Arial,sans-serif;
+  margin:0;
+  padding:10px;
+  background:#ffffff;
+  font-family:Arial,sans-serif;
 }
 
 table{
-    width:100%;
-    border-collapse:collapse;
+  width:100%;
+  border-collapse:collapse;
 }
 
 td{
-    border:2px solid #000;
+  border:2px solid #000;
 }
 
 .logo{
-    width:100px;
-    text-align:center;
-    font-weight:bold;
+  width:130px;
+  text-align:center;
+  font-weight:bold;
+  font-size:22px;
 }
 
 .titulo{
-    background:#d9d9d9;
-    font-size:28px;
-    font-weight:bold;
-    padding:4px;
+  background:#d9d9d9;
+  font-size:34px;
+  font-weight:bold;
+  padding:8px;
 }
 
 .temporada{
-    background:#d9d9d9;
-    font-size:24px;
-    font-weight:bold;
+  background:#d9d9d9;
+  font-size:28px;
+  font-weight:bold;
+  text-align:center;
 }
 
 .cabecera{
-    background:#f0c565;
-    font-size:22px;
-    font-weight:bold;
-    text-align:center;
+  background:#e8c15b;
+  font-size:24px;
+  font-weight:bold;
+  text-align:center;
 }
 
 .dia{
-    background:#d8d8d8;
-    width:180px;
-    text-align:center;
-    font-style:italic;
-    font-weight:bold;
+  background:#d8d8d8;
+  width:220px;
+  text-align:center;
+  font-weight:bold;
+  font-style:italic;
 }
 
 .fechaCompleta{
-    font-size:28px;
-    font-weight:bold;
-    margin:15px 0;
+  font-size:30px;
+  font-weight:bold;
+  margin:15px 0;
 }
 
 .numero{
-    background:#f0c565;
-    width:60px;
-    text-align:center;
-    font-size:26px;
-    font-weight:bold;
-}
-
-.veganoTitulo{
-    background:#d8edc6;
-    text-align:center;
-    font-weight:bold;
-    font-size:20px;
-}
-
-.postreTitulo{
-    background:#c7d7a2;
-    text-align:center;
-    font-weight:bold;
-    font-size:20px;
+  background:#e8c15b;
+  width:60px;
+  text-align:center;
+  font-size:30px;
+  font-weight:bold;
 }
 
 .menu{
-    text-align:center;
-    vertical-align:top;
-    padding:6px;
+  text-align:center;
+  vertical-align:top;
+  padding:10px;
 }
 
 .item{
-    margin:8px 0;
-    font-size:20px;
-    font-weight:bold;
+  margin:10px 0;
+  font-size:22px;
+  font-weight:bold;
+}
+
+.veg{
+  background:#d8edc6;
+}
+
+.postre{
+  background:#c7d7a2;
 }
 
 </style>
@@ -111,12 +106,12 @@ td{
 SJD
 </td>
 
-<td colspan="2" class="titulo">
+<td colspan="2" class="titulo" id="tituloSemana">
 MENÚ SETMANA
 </td>
 
-<td class="temporada" id="tituloDia">
-CARGANDO...
+<td class="temporada">
+ESTIU 2026
 </td>
 
 </tr>
@@ -139,9 +134,7 @@ SOPAR / CENA
 CARGANDO...
 </td>
 
-<td class="numero">
-1
-</td>
+<td class="numero">1</td>
 
 <td class="menu" id="cp"></td>
 
@@ -151,9 +144,7 @@ CARGANDO...
 
 <tr>
 
-<td class="numero">
-2
-</td>
+<td class="numero">2</td>
 
 <td class="menu" id="cs"></td>
 
@@ -163,25 +154,25 @@ CARGANDO...
 
 <tr>
 
-<td class="veganoTitulo">
+<td class="numero veg">
 VEG
 </td>
 
-<td class="menu" id="cveg"></td>
+<td class="menu veg" id="cveg"></td>
 
-<td class="menu" id="cnveg"></td>
+<td class="menu veg" id="cnveg"></td>
 
 </tr>
 
 <tr>
 
-<td class="postreTitulo">
-POSTRE
+<td class="numero postre">
+P
 </td>
 
-<td class="menu" id="cpostre"></td>
+<td class="menu postre" id="cpostre"></td>
 
-<td class="menu" id="cnpostre"></td>
+<td class="menu postre" id="cnpostre"></td>
 
 </tr>
 
@@ -198,9 +189,16 @@ const CAT = {
 "Miércoles":"DIMECRES",
 "Jueves":"DIJOUS",
 "Viernes":"DIVENDRES",
+"Sabado":"DISSABTE",
 "Sábado":"DISSABTE",
 "Domingo":"DIUMENGE"
 };
+
+function semanaMes(fecha){
+
+  return Math.ceil(fecha.getDate()/7);
+
+}
 
 async function cargar(){
 
@@ -212,46 +210,55 @@ await fetch(URL_JSON + "?t=" + Date.now());
 const datos =
 await respuesta.json();
 
-const fecha = new Date();
+const hoy = new Date();
 
-const fechaTexto =
-String(fecha.getDate()).padStart(2,'0') + "/" +
-String(fecha.getMonth()+1).padStart(2,'0') + "/" +
-fecha.getFullYear();
+const yyyy = hoy.getFullYear();
 
-const filaHoy =
-datos.find(x => x.Fecha === fechaTexto);
+const mm =
+String(hoy.getMonth()+1).padStart(2,"0");
 
-if(!filaHoy){
+const dd =
+String(hoy.getDate()).padStart(2,"0");
 
-document.getElementById("tituloDia").innerHTML =
+const fechaISO =
+`${yyyy}-${mm}-${dd}`;
+
+const registrosHoy =
+datos.filter(x =>
+String(x.Fecha).startsWith(fechaISO)
+);
+
+if(registrosHoy.length===0){
+
+document.getElementById("dia").innerHTML =
 "SIN MENÚ";
 
 return;
 
 }
 
-const hoy = filaHoy.Dia;
+const diaES =
+registrosHoy[0].Dia;
 
-document.getElementById("tituloDia").innerHTML =
-fechaTexto;
+const fechaVisible =
+`${dd}/${mm}/${yyyy}`;
+
+document.getElementById("tituloSemana").innerHTML =
+"MENÚ SETMANA " + semanaMes(hoy);
 
 document.getElementById("dia").innerHTML =
-CAT[hoy] +
+(CAT[diaES] || diaES.toUpperCase()) +
 "<div class='fechaCompleta'>" +
-fechaTexto +
+fechaVisible +
 "</div>" +
-hoy.toUpperCase();
+diaES.toUpperCase();
 
 function filtrar(servicio,categoria){
 
-return datos.filter(x =>
-
-x.Fecha === fechaTexto &&
-x.Servicio === servicio &&
-x.Categoria === categoria &&
-x.Activo === "SI"
-
+return registrosHoy.filter(x =>
+x.Servicio===servicio &&
+x.Categoria===categoria &&
+x.Activo==="SI"
 );
 
 }
@@ -259,11 +266,7 @@ x.Activo === "SI"
 function pintar(lista){
 
 return lista.map(x =>
-
-"<div class='item'>" +
-x.Plato_Cat +
-"</div>"
-
+`<div class="item">${x.Plato_Cat}</div>`
 ).join("");
 
 }
@@ -293,21 +296,21 @@ document.getElementById("cnpostre").innerHTML =
 pintar(filtrar("Cena","Postre"));
 
 }
-catch(e){
+catch(error){
 
-document.getElementById("tituloDia").innerHTML =
+document.getElementById("dia").innerHTML =
 "ERROR";
+
+console.error(error);
 
 }
 
 }
 
 cargar();
-
 setInterval(cargar,60000);
 
 </script>
 
 </body>
-
 </html>
