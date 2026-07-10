@@ -2,9 +2,7 @@
 <html>
 
 <head>
-
 <meta charset="utf-8">
-
 <title>Menú Cafetería</title>
 
 <style>
@@ -63,16 +61,14 @@ td{
   font-size:28px;
   font-weight:bold;
   margin:15px 0;
-  line-height:1.3;
 }
 
 .numero{
   background:#f0c565;
   width:50px;
-  font-weight:bold;
   text-align:center;
-  vertical-align:top;
   font-size:26px;
+  font-weight:bold;
 }
 
 .menu{
@@ -103,10 +99,7 @@ td{
 <table>
 
 <tr>
-
-<td rowspan="2" class="logo">
-SJD
-</td>
+<td rowspan="2" class="logo">SJD</td>
 
 <td colspan="2" class="titulo">
 MENÚ SETMANA
@@ -136,9 +129,7 @@ SOPAR / CENA
 CARGANDO...
 </td>
 
-<td class="numero">
-1
-</td>
+<td class="numero">1</td>
 
 <td class="menu" id="cp"></td>
 
@@ -148,9 +139,7 @@ CARGANDO...
 
 <tr>
 
-<td class="numero">
-2
-</td>
+<td class="numero">2</td>
 
 <td class="menu" id="cs"></td>
 
@@ -195,23 +184,6 @@ await fetch(URL_JSON + "?t=" + Date.now());
 const datos =
 await respuesta.json();
 
-const dias = [
-"Domingo",
-"Lunes",
-"Martes",
-"Miércoles",
-"Jueves",
-"Viernes",
-"Sábado"
-];
-
-let hoy =
-dias[new Date().getDay()];
-
-if(!datos.some(x => x.Dia === hoy)){
-  hoy = "Lunes";
-}
-
 const fecha = new Date();
 
 const fechaTexto =
@@ -219,8 +191,19 @@ String(fecha.getDate()).padStart(2,'0') + "/" +
 String(fecha.getMonth()+1).padStart(2,'0') + "/" +
 fecha.getFullYear();
 
+const filaHoy =
+datos.find(x => x.Fecha === fechaTexto);
+
+if(!filaHoy){
+   document.getElementById("tituloDia").innerHTML =
+   "SIN MENÚ";
+   return;
+}
+
+const hoy = filaHoy.Dia;
+
 document.getElementById("tituloDia").innerHTML =
-hoy.toUpperCase();
+fechaTexto;
 
 document.getElementById("dia").innerHTML =
 CAT[hoy] +
@@ -232,10 +215,12 @@ hoy.toUpperCase();
 function filtrar(servicio,categoria){
 
 return datos.filter(x =>
-x.Dia === hoy &&
+
+x.Fecha === fechaTexto &&
 x.Servicio === servicio &&
 x.Categoria === categoria &&
 x.Activo === "SI"
+
 );
 
 }
@@ -243,9 +228,11 @@ x.Activo === "SI"
 function pintar(lista){
 
 return lista.map(x =>
+
 "<div class='item'>" +
 x.Plato_Cat +
 "</div>"
+
 ).join("");
 
 }
@@ -285,5 +272,4 @@ setInterval(cargar,60000);
 </script>
 
 </body>
-
 </html>
