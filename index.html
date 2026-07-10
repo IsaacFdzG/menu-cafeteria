@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <meta charset="utf-8">
-
 <title>Menú Cafetería SJD</title>
 
 <style>
@@ -15,61 +12,80 @@
 
 body{
     margin:0;
-    font-family:Arial, Helvetica, sans-serif;
     background:#f5f7fa;
-    color:#002b45;
+    font-family:Segoe UI, Arial, sans-serif;
+    color:#1f2937;
 }
 
 .header{
-    background:#0094d4;
+    background:#006bb7;
     color:white;
-    padding:25px;
+    padding:20px 30px;
 }
 
 .titulo{
     font-size:42px;
-    font-weight:bold;
+    font-weight:700;
 }
 
 .subtitulo{
     font-size:20px;
     opacity:0.95;
-    margin-top:5px;
 }
 
 .container{
     display:flex;
-    min-height:calc(100vh - 110px);
+    height:calc(100vh - 110px);
 }
 
-.lateral{
-    width:280px;
+.sidebar{
+
+    width:220px;
     background:white;
-    padding:30px;
-    text-align:center;
-    border-right:4px solid #e5e5e5;
+    border-right:4px solid #e5e7eb;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
 }
 
 .dia-cat{
-    font-size:34px;
+    font-size:30px;
     font-weight:bold;
-    color:#0094d4;
+    color:#006bb7;
+    text-align:center;
 }
 
-.fecha{
-    font-size:42px;
+.numero-dia{
+    font-size:90px;
     font-weight:bold;
+    line-height:1;
+    color:#006bb7;
     margin-top:20px;
-    margin-bottom:20px;
 }
 
-.dia-es{
-    font-size:28px;
+.mes{
+    font-size:24px;
     font-weight:bold;
+    margin-top:10px;
+}
+
+.anio{
+    font-size:18px;
     color:#666;
 }
 
-.contenido{
+.dia-es{
+    font-size:24px;
+    margin-top:25px;
+    color:#666;
+    font-weight:bold;
+}
+
+.content{
     flex:1;
     padding:20px;
 }
@@ -84,61 +100,81 @@ body{
 }
 
 .servicio{
-    background:#0094d4;
+
+    background:#006bb7;
     color:white;
+
     text-align:center;
+
+    padding:12px;
+
     font-size:24px;
     font-weight:bold;
-    padding:12px;
+
     border-radius:12px;
-    margin-bottom:15px;
+
+    margin-bottom:12px;
 }
 
 .bloque{
+
     background:white;
-    border-radius:12px;
-    margin-bottom:15px;
+
+    border-radius:14px;
+
     overflow:hidden;
-    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+
+    margin-bottom:14px;
+
+    box-shadow:
+    0 2px 8px rgba(0,0,0,0.08);
 }
 
-.bloque-titulo{
-    padding:10px;
+.titulo-bloque{
+
     text-align:center;
-    font-weight:bold;
+
+    padding:10px;
+
     font-size:18px;
+
+    font-weight:bold;
 }
 
 .primero{
-    background:#f3c54b;
+    background:#d8c6ff;
 }
 
 .segundo{
-    background:#f1a43c;
+    background:#ffd7a8;
 }
 
 .vegano{
-    background:#92cc73;
+    background:#ffbcbc;
 }
 
 .postre{
-    background:#b7d89a;
+    background:#e6d9ff;
 }
 
-.bloque-contenido{
+.cuerpo-bloque{
     padding:12px;
 }
 
 .item{
-    font-size:20px;
+
+    font-size:24px;
+
     font-weight:bold;
-    margin:10px 0;
+
     text-align:center;
+
+    margin:10px 0;
 }
 
 .footer{
     text-align:center;
-    margin-top:20px;
+    margin-top:10px;
     font-size:18px;
     color:#777;
 }
@@ -163,13 +199,21 @@ Hospital Sant Joan de Déu Barcelona
 
 <div class="container">
 
-<div class="lateral">
+<div class="sidebar">
 
 <div class="dia-cat" id="diaCat">
 CARGANDO
 </div>
 
-<div class="fecha" id="fecha">
+<div class="numero-dia" id="numeroDia">
+--
+</div>
+
+<div class="mes" id="mes">
+--
+</div>
+
+<div class="anio" id="anio">
 --
 </div>
 
@@ -179,7 +223,7 @@ CARGANDO
 
 </div>
 
-<div class="contenido">
+<div class="content">
 
 <div class="columnas">
 
@@ -191,41 +235,41 @@ DINAR / COMIDA
 
 <div class="bloque">
 
-<div class="bloque-titulo primero">
+<div class="titulo-bloque primero">
 PRIMER / PRIMERO
 </div>
 
-<div class="bloque-contenido" id="cp"></div>
+<div class="cuerpo-bloque" id="cp"></div>
 
 </div>
 
 <div class="bloque">
 
-<div class="bloque-titulo segundo">
+<div class="titulo-bloque segundo">
 SEGON / SEGUNDO
 </div>
 
-<div class="bloque-contenido" id="cs"></div>
+<div class="cuerpo-bloque" id="cs"></div>
 
 </div>
 
 <div class="bloque">
 
-<div class="bloque-titulo vegano">
+<div class="titulo-bloque vegano">
 VEGÀ / VEGANO
 </div>
 
-<div class="bloque-contenido" id="cveg"></div>
+<div class="cuerpo-bloque" id="cveg"></div>
 
 </div>
 
 <div class="bloque">
 
-<div class="bloque-titulo postre">
+<div class="titulo-bloque postre">
 POSTRE
 </div>
 
-<div class="bloque-contenido" id="cpostre"></div>
+<div class="cuerpo-bloque" id="cpostre"></div>
 
 </div>
 
@@ -239,41 +283,41 @@ SOPAR / CENA
 
 <div class="bloque">
 
-<div class="bloque-titulo primero">
+<div class="titulo-bloque primero">
 PRIMER / PRIMERO
 </div>
 
-<div class="bloque-contenido" id="cnp"></div>
+<div class="cuerpo-bloque" id="cnp"></div>
 
 </div>
 
 <div class="bloque">
 
-<div class="bloque-titulo segundo">
+<div class="titulo-bloque segundo">
 SEGON / SEGUNDO
 </div>
 
-<div class="bloque-contenido" id="cns"></div>
+<div class="cuerpo-bloque" id="cns"></div>
 
 </div>
 
 <div class="bloque">
 
-<div class="bloque-titulo vegano">
+<div class="titulo-bloque vegano">
 VEGÀ / VEGANO
 </div>
 
-<div class="bloque-contenido" id="cnveg"></div>
+<div class="cuerpo-bloque" id="cnveg"></div>
 
 </div>
 
 <div class="bloque">
 
-<div class="bloque-titulo postre">
+<div class="titulo-bloque postre">
 POSTRE
 </div>
 
-<div class="bloque-contenido" id="cnpostre"></div>
+<div class="cuerpo-bloque" id="cnpostre"></div>
 
 </div>
 
@@ -305,11 +349,28 @@ const CAT = {
 "Domingo":"DIUMENGE"
 };
 
+const MESES_CAT = [
+"GENER",
+"FEBRER",
+"MARÇ",
+"ABRIL",
+"MAIG",
+"JUNY",
+"JULIOL",
+"AGOST",
+"SETEMBRE",
+"OCTUBRE",
+"NOVEMBRE",
+"DESEMBRE"
+];
+
 function semanaMes(fecha){
- return Math.ceil(fecha.getDate()/7);
+    return Math.ceil(fecha.getDate()/7);
 }
 
 async function cargar(){
+
+try{
 
 const respuesta =
 await fetch(URL_JSON + "?t=" + Date.now());
@@ -323,7 +384,8 @@ const yyyy = hoy.getFullYear();
 const mm = String(hoy.getMonth()+1).padStart(2,"0");
 const dd = String(hoy.getDate()).padStart(2,"0");
 
-const fechaISO = `${yyyy}-${mm}-${dd}`;
+const fechaISO =
+`${yyyy}-${mm}-${dd}`;
 
 const registros =
 datos.filter(x =>
@@ -331,27 +393,30 @@ String(x.Fecha).startsWith(fechaISO)
 );
 
 if(registros.length===0){
- return;
+    return;
 }
 
-const dia =
+const diaES =
 registros[0].Dia;
-
-const fechaVisible =
-`${dd}/${mm}/${yyyy}`;
 
 document.getElementById("tituloSemana").innerHTML =
 "MENÚ CAFETERIA · SETMANA " +
 semanaMes(hoy);
 
 document.getElementById("diaCat").innerHTML =
-CAT[dia] || dia;
+CAT[diaES] || diaES;
 
-document.getElementById("fecha").innerHTML =
-fechaVisible;
+document.getElementById("numeroDia").innerHTML =
+dd;
+
+document.getElementById("mes").innerHTML =
+MESES_CAT[hoy.getMonth()];
+
+document.getElementById("anio").innerHTML =
+yyyy;
 
 document.getElementById("diaEs").innerHTML =
-dia.toUpperCase();
+diaES.toUpperCase();
 
 function filtrar(servicio,categoria){
 
@@ -396,9 +461,13 @@ cnpostre.innerHTML =
 pintar(filtrar("Cena","Postre"));
 
 }
+catch(e){
+console.error(e);
+}
+
+}
 
 cargar();
-
 setInterval(cargar,60000);
 
 </script>
