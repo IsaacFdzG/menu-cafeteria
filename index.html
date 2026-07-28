@@ -155,7 +155,8 @@ body{
 }
 
 .postre{
-    background:#dccdff;
+    background:#F8D7D1;
+    color:#D92D0F;
 }
 
 .cuerpo-bloque{
@@ -449,8 +450,8 @@ pintar(filtrar("Comida","Vegano"));
 cpostre.innerHTML =
 '<div class="item">POSTRE</div>';
 
-cnpostre.innerHTML =
-'<div class="item">POSTRE</div>';
+cnp.innerHTML =
+pintar(filtrar("Cena","Primero"));
 
 cns.innerHTML =
 pintar(filtrar("Cena","Segundo"));
@@ -459,9 +460,8 @@ cnveg.innerHTML =
 pintar(filtrar("Cena","Vegano"));
 
 cnpostre.innerHTML =
-pintar(filtrar("Cena","Postre"));
+'<div class="item">POSTRE</div>';
 
-}
 catch(e){
 console.error(e);
 }
