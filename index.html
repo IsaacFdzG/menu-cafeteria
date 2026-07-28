@@ -486,6 +486,24 @@ console.error(e);
 cargar();
 setInterval(cargar,60000);
 
+function ajustarEscala() {
+
+    const anchoBase = 1755;
+    const altoBase = 941;
+
+    const escala = Math.min(
+        window.innerWidth / anchoBase,
+        window.innerHeight / altoBase
+    );
+
+    document.body.style.transform = `scale(${escala})`;
+    document.body.style.transformOrigin = "top left";
+}
+
+window.addEventListener("resize", ajustarEscala);
+
+ajustarEscala();
+
 </script>
 
 </body>
