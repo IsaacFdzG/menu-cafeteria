@@ -22,14 +22,14 @@ body{
 .header{
     background:#8A278C;
     color:white;
-    padding:20px 30px;
+    padding:12px 30px;
 }
 
 .titulo{
     font-size:clamp(26px, 2.5vw, 42px);
 }
 .subtitulo{
-    font-size:20px;
+    font-size:18px;
     opacity:0.95;
 }
 
@@ -39,8 +39,8 @@ body{
     width:100%;
 }
 .sidebar{
-
-    width:220px;
+    width:0;
+    display:none;
     background:white;
     border-right:4px solid #e5e7eb;
 
@@ -202,6 +202,10 @@ body{
 
 <div class="titulo" id="tituloSemana">
 MENÚ CAFETERIA
+</div>
+
+<div class="subtitulo" id="fechaCabecera">
+Hospital Sant Joan de Déu Barcelona
 </div>
 
 <div class="subtitulo">
@@ -414,8 +418,15 @@ const diaES =
 registros[0].Dia;
 
 document.getElementById("tituloSemana").innerHTML =
-"MENÚ CAFETERIA · SETMANA " +
-semanaMes(hoy);
+"MENÚ CAFETERIA";
+
+document.getElementById("fechaCabecera").innerHTML =
+"SETMANA " + semanaMes(hoy) +
+" · " +
+dd + " " +
+MESES_CAT[hoy.getMonth()] +
+" " +
+yyyy;
 
 document.getElementById("diaCat").innerHTML =
 CAT[diaES] || diaES;
