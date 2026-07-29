@@ -37,27 +37,7 @@ body{
     display:flex;
     height:calc(100vh - 105px);
     width:100%;
-}
-.sidebar{
-    width:0;
-    display:none;
-    background:white;
-    border-right:4px solid #e5e7eb;
 
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
-    padding:20px;
-}
-
-.dia-cat{
-    font-size:30px;
-    font-weight:bold;
-    color:#D92D0F;
-    text-align:center;
-}
 
 .numero-dia{
     font-size:90px;
@@ -216,21 +196,6 @@ Hospital Sant Joan de Déu Barcelona
 
 <div class="container">
 
-<div class="sidebar">
-
-<div class="dia-cat" id="diaCat">
-CARGANDO
-</div>
-
-<div class="numero-dia" id="numeroDia">
---
-</div>
-
-<div class="mes" id="mes">
---
-</div>
-
-<div class="anio" id="anio">
 --
 </div>
 
@@ -427,21 +392,6 @@ dd + " " +
 MESES_CAT[hoy.getMonth()] +
 " " +
 yyyy;
-
-document.getElementById("diaCat").innerHTML =
-CAT[diaES] || diaES;
-
-document.getElementById("numeroDia").innerHTML =
-dd;
-
-document.getElementById("mes").innerHTML =
-MESES_CAT[hoy.getMonth()];
-
-document.getElementById("anio").innerHTML =
-yyyy;
-
-document.getElementById("diaEs").innerHTML =
-diaES.toUpperCase();
 
 function filtrar(servicio,categoria){
 
