@@ -173,11 +173,7 @@
 
     min-height:600px;
 
-    background:white;
-
-    border:2px solid #d7dce3;
-
-    border-radius:12px;
+    background:#f5f7fa;
 }
   .menu-panel{
     width:100%;
@@ -371,7 +367,12 @@ const datos =
 await respuesta.json();
 
 const hoy = new Date();
+const minutosActuales =
+hoy.getHours() * 60 +
+hoy.getMinutes();
 
+const esComida =
+minutosActuales < 915;
 const yyyy = hoy.getFullYear();
 const mm = String(hoy.getMonth()+1).padStart(2,"0");
 const dd = String(hoy.getDate()).padStart(2,"0");
@@ -395,6 +396,11 @@ document.getElementById("tituloSemana").innerHTML =
 "MENÚ CAFETERIA";
 
 document.getElementById("fechaCabecera").innerHTML =
+document.getElementById("menuComida").style.display =
+esComida ? "block" : "none";
+
+document.getElementById("menuCena").style.display =
+esComida ? "none" : "block";
 "SETMANA " + semanaMes(hoy) +
 " · " +
 dd + " " +
