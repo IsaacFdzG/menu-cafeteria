@@ -11,7 +11,7 @@
     box-sizing:border-box;
 }
 
-body{
+.body{
     margin:0;
     background:#f5f7fa;
     font-family:Segoe UI, Arial, sans-serif;
@@ -72,7 +72,7 @@ body{
 
 .pantalla{
     display:grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 35% 65%;
     gap:20px;
 }
     .iptv-panel{
@@ -171,17 +171,20 @@ body{
     line-height:1.3;
 }
 .tv-placeholder{
-
     width:100%;
     height:100%;
 
-    min-height:600px;
+    min-height:760px;
 
-    background:#f5f7fa;
+    background:white;
 
     border:2px solid #d7dce3;
 
     border-radius:12px;
+}
+    .menu-panel{
+    display:flex;
+    flex-direction:column;
 }
 .footer{
     text-align:center;
@@ -216,7 +219,7 @@ Hospital Sant Joan de Déu Barcelona
 <!-- INICIO CONTENT -->
 <div class="content">
 <div class="pantalla">
-<div id="menuActual"></div>
+<div class="menu-panel">
 <div class="columna">
 <div class="servicio">
 DINAR / COMIDA
@@ -308,17 +311,8 @@ POSTRE
 
 <div class="cuerpo-bloque" id="cnpostre"></div>
 
-</div>
-
-</div>
-
-</div>
-</div>
-
 <div class="iptv-panel">
     <div class="tv-placeholder"></div>
-</div>
-
 </div>
 
 <div class="footer">
