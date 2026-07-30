@@ -71,9 +71,9 @@ body{
 }
 
 .columnas{
-    display:grid;
-    grid-template-columns: 1fr 1fr 420px;
+    display:flex;
     gap:20px;
+    position:relative;
 }
 
 .columna{
@@ -161,11 +161,20 @@ body{
 
     line-height:1.3;
 }
-.columna-tv{
-    background:#000;
-    border-radius:14px;
-    overflow:hidden;
-    min-height:700px;
+    .tv-placeholder{
+    position:absolute;
+
+    top:80px;
+    right:10px;
+
+    width:320px;
+    height:180px;
+
+    background:#f5f7fa;
+
+    border-radius:12px;
+
+    border:2px solid #d8dde5;
 }
 .footer{
     text-align:center;
@@ -200,9 +209,8 @@ Hospital Sant Joan de Déu Barcelona
 <!-- INICIO CONTENT -->
 <div class="content">
 <div class="columnas">
-
+<div class="tv-placeholder"></div>
 <div class="columna">
-
 <div class="servicio">
 DINAR / COMIDA
 </div>
@@ -298,7 +306,6 @@ POSTRE
 </div>
 
 </div>
-<div class="columna-tv"></div>
 <div class="footer">
     Bon profit · Buen provecho · Enjoy your meal · Bon appétit<br>
     شهية طيبة · 祝您用餐愉快 · 맛있게 드세요 · 召し上がれ
