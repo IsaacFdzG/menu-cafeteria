@@ -75,18 +75,15 @@
     grid-template-columns: 35% 65%;
     gap:20px;
 }
-    .iptv-panel{
-    background:white;
-
-    border-radius:14px;
-
-    min-height:650px;
+.iptv-panel{
+    width:100%;
+    height:100%;
 
     padding:15px;
 }
 
 .columna{
-    flex:1;
+    width:100%;
 }
 
 .servicio{
@@ -174,7 +171,7 @@
     width:100%;
     height:100%;
 
-    min-height:760px;
+    min-height:600px;
 
     background:white;
 
@@ -182,9 +179,9 @@
 
     border-radius:12px;
 }
-    .menu-panel{
-    display:flex;
-    flex-direction:column;
+  .menu-panel{
+    width:100%;
+}
 }
 .footer{
     text-align:center;
@@ -220,7 +217,7 @@ Hospital Sant Joan de Déu Barcelona
 <div class="content">
 <div class="pantalla">
 <div class="menu-panel">
-<div class="columna">
+<div class="columna" id="menuComida">
 <div class="servicio">
 DINAR / COMIDA
 </div>
@@ -267,7 +264,7 @@ POSTRE
 
 </div>
 
-<div class="columna">
+<div class="columna" id="menuCena">
 
 <div class="servicio">
 SOPAR / CENA
